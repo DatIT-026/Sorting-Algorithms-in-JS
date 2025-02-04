@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bubble Sort</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bubble Sort (Sắp xếp nổi bọt)</h1>
+    <h2>1. Giới thiệu</h2>
+    <ul>
+        <li>
+            <p><b>Bubble Sort</b> là thuật toán sắp xếp đơn giản. Nó lặp qua danh sách, so sánh các phần tử liền kề,
+                và hoán đổi nếu chúng không theo thứ tự. Quá trình lặp lại cho đến khi danh sách được sắp xếp.</p>
+        </li>
+    </ul>
+
+    <h2>2. Code</h2>
+    <h3>Normal Function</h3>
+    <pre>
+        function bubbleSort(arr) {
+            let n = arr.length;
+            for(let i = 0; i < n - 1; i++) {
+                for(let j = 0; j < n - 1 - i; j++) {
+                    if(arr[j] > arr[j + 1]) {
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+        
+        const arr = [64, 34, 25, 12, 22, 11, 90];
+        console.log("Array: ", arr);
+        
+        const sortedArr = bubbleSort(arr);
+        console.log("Array after sorted: ", sortedArr);
+</pre>
+    <h3>Output:</h3>
+    <p id="originalArray"></p>
+    <p id="sortedArray"></p>
+
+    <script>
+        function bubbleSort(arr) {
+            let n = arr.length;
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        const arr = [64, 34, 25, 12, 22, 11, 90];
+        document.getElementById('originalArray').textContent = "Original Array: " + arr;
+
+        const sortedArr = bubbleSort(arr);
+        document.getElementById('sortedArray').textContent = "Sorted Array: " + sortedArr;
+    </script>
+    -----------
+    <h3>Arrow Function (Kể từ thuật toán này sẽ luôn sử dụng Arrow Function)</h3>
+    <pre>
+        const bubbleSort = (arr) => {
+            let n = arr.length;
+            for(let i = 0; i < n - 1; i++) {
+                for(let j = 0; j < n - 1 - i; j++) {
+                    if(arr[j] < arr[j + 1]) {
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        const arr = [46, 52, 27, 12, 21, 36, 96];
+        console.log("Array: ", arr);
+        
+        const sortedArr = bubbleSort(arr);
+        console.log("Array after sorted: ", sortedArr);
+</pre>
+    <h3>Output:</h3>
+    <p id="originalArray0"></p>
+    <p id="sortedArray0"></p>
+
+    <script>
+        const bubbleSort0 = (arr0) => {
+            let n0 = arr0.length;
+            for(let i = 0; i < n - 1; i++) {
+                for(let j = 0; j < n - 1 - i; j++) {
+                    if(arr0[j] < arr0[j + 1]) {
+                        let temp = arr0[j];
+                        arr0[j] = arr0[j + 1];
+                        arr0[j + 1] = temp;
+                    }
+                }
+            }
+            return arr0;
+        }
+
+        const arr0 = [46, 52, 27, 12, 21, 36, 96];
+        document.getElementById('originalArray0').textContent = "Original Array: " + arr0;
+
+        const sortedArr0 = bubbleSort(arr0);
+        document.getElementById('sortedArray0').textContent = "Sorted Array: " + sortedArr0;
+    </script>
+
+    <h2>3. Kết Luận</h2>
+    <ul>
+        <li>Bubble Sort dễ hiểu, phù hợp với mảng nhỏ.</li>
+        <li>Độ phức tạp: O(n^2) trong trường hợp xấu nhất.</li>
+        <li>Không hiệu quả với dữ liệu lớn, nhưng hữu ích để học các khái niệm cơ bản.</li>
+    </ul>
+    <button onclick="history.back()">Back</button>
+</body>
+
+</html>

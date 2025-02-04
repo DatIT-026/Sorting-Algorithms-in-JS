@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Selection Sort</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Selection Sort (Sắp xếp chọn)</h1>
+    <h2>1. Giới thiệu</h2>
+    <h3>Vấn đề</h3>
+    <ul>
+        <p>Nếu ai đó cho bạn một dãy số gồm n phần tử lộn xộn, ngoài 
+            sử dụng thuật toán <i>Bubble Sort</i> đã được học trước đó thì bạn sẽ làm 
+            như thế nào để sắp xếp tăng dần nó nhỉ?
+        </p>
+    </ul>
+    <h3>Ý tưởng đơn giản</h3>
+    <ul>
+        <p>Có thể nghĩ ra như vầy:</p>
+        <ul>
+            <p><b>Bước 1:</b> Đầu tiên, ta sẽ tìm ra giá trị nhỏ nhất (GTNN) của dãy số từ vị trí 1 → n.</p>
+            <p><b>Bước 2:</b> Sau đó, đổi chỗ GTNN đó cho vị trí đầu tiên của dãy.</p>
+            <p><b>Bước 3:</b> Lặp lại Bước 1 và Bước 2, nhưng là từ vị trí số 2 (vì giờ đây ta đã có giá trị đầu tiên
+                là GTNN rồi, nên có thể bỏ qua nó).</p>
+            <ul><p>(Xem rõ cách thức sắp xếp ở ảnh minh hoạ bên dưới hoặc <b>mục 2, Giải thích</b>)</p></ul>
+        </ul>
+        <p>
+            <b><i>Nhận xét:</i></b> Tôi để ý rằng, khi đến Bước 3, thực sự ta đã thu hẹp được bài toán.
+            Từ dãy số 1 → n, giờ đây chỉ còn 2 → n...và cứ như thế thu hẹp dần cho đến n → n thì coi như xong.
+            Đây chính là thuật toán Selection Sort.
+            <img src="https://he-s3.s3.amazonaws.com/media/uploads/2888f5b.png" alt="Selection Sort" style="width: 650px; height: auto">
+        </p>
+    </ul>
+
+    <h2>2. Code</h2>
+    <pre>
+        const selectionSort = (arr) => {
+            
+            <i>// Chạy một Loop qua từng giá trị của mảng (Loop 1)</i>
+            for(let i = 0; i < arr.length; i++) {
+
+                let minIndex = i; <i>// Phần tử nhỏ nhất hiện tại trong vòng lặp</i>
+                
+                <i>// Loop so sánh các gt còn lại trong arr vs gt hiện tại của loop 1</i>
+                for(let j = i + 1; j < arr.length; j++) {
+                    if(arr[minIndex] > arr[j]) {
+                        minIndex = j; <i>//Đổi index của loop 1 và 2</i>
+                    }
+                }
+                if(minIndex !== i) {
+                    [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]; <i>//Swap</i>
+                }
+            }
+            return arr;
+        }
+        
+        const arr = [3, 1, 4, 2, 5];
+        console.log("Array: ", arr);
+        
+        const sortedArr = selectionSort(arr);
+        console.log("Array after sorted: ", sortedArr);
+</pre>
+    <h3>Output:</h3>
+    <p id="originalArray"></p>
+    <p id="sortedArray"></p>
+
+    <script>
+        const selectionSort = (arr) => {
+            for (let i = 0; i < arr.length; i++) {
+                let minIndex = i;
+                for (let j = i + 1; j < arr.length; j++) {
+                    if (arr[minIndex] > arr[j]) {
+                        minIndex = j;
+                    }
+                }
+                if (minIndex !== i) {
+                    [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+                }
+            }
+            return arr;
+        }
+
+        const arr = [3, 1, 4, 2, 5];
+        document.getElementById('originalArray').textContent = "Original Array: " + arr;
+
+        const sortedArr = selectionSort(arr);
+        document.getElementById('sortedArray').textContent = "Sorted Array: " + sortedArr;
+    </script>
+
+    <h3>Giải thích</h3>
+    <pre>Với mảng ban đầu <b>[3, 1, 4, 2, 5]</b>, ta thực hiện như sau:
+    <li>Loop 1 (Với <b>i = 0</b>):
+        Số nhỏ nhất: 1
+        Đổi chỗ với số đầu tiên (3) trong dãy: 3 ←→ 1
+        Kết quả sau Loop 1: <i>[1, 3, 4, 2, 5]</i></li>
+    <li>Loop 2 (<b>i = 1</b>):
+        Số nhỏ nhất: 2
+        Đổi chỗ với số đầu tiên (3) trong dãy [3, 4, 2, 5]: 3 ←→ 2
+        Kết quả sau Loop 2: <i>[1, 2, 4, 3, 5]</i></li>
+    <li>Loop 3 (<b>i = 2</b>):
+        Số nhỏ nhất: 3
+        Đổi chỗ với số đầu tiên (4) trong dãy [4, 3, 5]: 4 ←→ 3
+        Kết quả: <i>[1, 2, 4, 3, 5]</i></li>
+    <li>Loop 4 (<b>i = 3</b>):
+        Số nhỏ nhất đồng thời cũng nằm ở đầu dãy: 4 → Không cần đổi
+        Kết quả mảng không đổi: <i>[1, 2, 4, 3, 5]</i></li>
+    <li>Loop 5 (<b>i = 4</b>):
+        Chỉ còn 1 số -> <b>Done!</b></li>
+<b>Kết quả Cuối Cùng</b>: [1, 2, 4, 3, 5].</pre>
+
+    <h2>3. Kết Luận</h2>
+    <ul>
+        <li>Độ phức tạp: O(n^2)</li>
+        <li>Không hiệu quả với dữ liệu lớn, nhưng hữu ích để học các khái niệm cơ bản.</li>
+    </ul>
+    <button onclick="history.back()">Back</button>
+</body>
+
+</html>
