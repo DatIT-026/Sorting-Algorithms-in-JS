@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Merge Sort</title>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        body {
+            font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            background-color: #fbeeee;
+            color: black;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Merge Sort</h1>
+    <h2>I. Introduction</h2>
+    <h3>1. How does Merge Sort work?</h3>
+    <ul>
+        <p><b>Merge Sort</b> is a popular sorting algorithm known for its
+        </p>
+    </ul>
+
+    <h3>2. Kỹ thuật chọn phần tử chốt</h3>
+    <ul>
+        <p>Kỹ thuật chọn <b>pivot</b> ảnh hưởng khá nhiều đến khả năng rơi vào các
+            vòng lặp vô hạn đối với các trường hợp đặc biệt. Tốt nhất chọn <b>pivot</b> nằm
+            ở trung vị của danh sách. Khi đó, sau log<sub>2</sub>(n) lần chia ta đạt được kích thước mảng con bằng 1.
+        </p>
+        <p>Dưới đây là một số cách chọn pivot</p>
+        <ul>
+            <li>
+                <p>Chọn phần tử đứng đầu hoặc đứng cuối làm pivot.</p>
+            </li>
+            <li>
+                <p>Chọn phần tử đứng giữa danh sách.</p>
+            </li>
+            <li>
+                <p>Chọn phần tử trung vị trong 3 phần tử đầu, đứng giữa và đứng cuối làm pivot:</p>
+            </li>
+            <li>
+                <p>Chọn phần tử ngẫu nhiên làm phần tử chốt. Tuy nhiên, cách này rất dễ dẫn đến khả năng rơi vào các
+                    trường hợp đặc biệt.</p>
+            </li>
+        </ul>
+    </ul>
+
+    <h3>3. Ý tưởng cho Quick Sort</h3>
+    <ul>
+        <p><b>Bước 1:</b> Chọn pivot</p>
+        <p><b>Bước 2:</b> Khai báo 2 biến con trỏ để trỏ và duyệt 2 phía của pivot.</p>
+        <p><b>Bước 3:</b> Biến bên trái trỏ đến từng phần tử mảng con bên trái và tương tự với bên phải.</p>
+        <p><b>Bước 4:</b> Khi biến bên trái < pivot → di chuyển sang phải</p>
+        <p><b>Bước 5:</b> Khi biến bên phải < pivot → di chuyển sang trái</p>
+        <p><b>Bước 6:</b> Nếu không xảy ra trường hợp ở <b>bước 4</b> và <b>5</b> → tráo đổi giá trị 2 biến trái và phải</p>
+        <p><b>Bước 7:</b> Nếu trái > phải → đây là giá trị pivot mới.</p>
+        <ul>
+            <p>(Xem rõ cách thức sắp xếp ở ảnh minh hoạ bên dưới hoặc <b>mục 2, Giải thích</b>)</p>
+        </ul>
+    </ul>
+
+    <h3>4. Miêu tả thuật toán</h3>
+    <p>Xét một dãy số như sau: </p>
+    <ul><p style="font-size: 15px;"><code>6, 1, 2, 7, 9, 3, 4, 5, 10, 8</code></p></ul>
+    <p>Yêu cầu là sắp xếp dãy trên theo thứ tự không giảm từ trái qua phải.</p>
+    <img src="https://images.viblo.asia/full/9737ec24-ae95-43c0-905b-84520e17b7ac.png" alt="Selection Sort" style="width: 650px; height: auto">
+    <p>Chọn <b>pivot là 6</b>, xét 2 "quân lính" là A và B lần lượt đặt ở 2 đầu của dãy số (A ở vị trí đầu bên trái và B ở cuối bên phải).</p>
+    <p>Luật hành quân như sau:</p>
+    <ul>
+        <p>B đi trước, bắt đầu di chuyển về bên trái, đến khi gặp phần tử có giá trị nhỏ hơn giá trị của <b>pivot</b> thì <i>dừng lại</i>. Ở đây, B dừng ở vị trí số 5.</p>
+        <p>Đến lượt A, di chuyển về bên phải, đến khi gặp được phần tử có giá trị lớn hơn giá trị của <b>pivot</b> thì <i>dừng lại</i>. Ở đây, A dừng ở vị trí số 7.</p>
+        <p>Lúc này, ta đổi chỗ 2 số ở vị trí của A và B cho nhau, sau đó A và B trở về vị trí như lúc đầu, ta sẽ thu được dãy số sau:</p>
+        <p style="font-size: 15px;"><code>6, 1, 2, 5, 9, 3, 4, 7, 10, 8</code></p>
+
+        <p>Tiếp tục cuộc hành quân như trên, lượt này ta sẽ cần đổi chỗ hai số 4 và 9 cho nhau, ta được dãy số:</p>
+        <p style="font-size: 15px;"><code>6, 1, 2, 5, 4, 3, 9, 7, 10, 8</code></p>
+
+        <p>Đến với lượt hành quân tiếp theo, ta sẽ thấy b sẽ dừng lại ở vị trí của số 3. Tuy nhiên, A chưa tìm được số nào lớn hơn 6 đã "đụng mặt" với B.</p>
+        <p>Như vậy, ta coi lượt hành quân này là <i>thất bại</i>, và ta tiến hành đổi chỗ số 3 (số mà quân B đang dừng lại) với <b>pivot</b> là số 6. Ta thu được:</p>
+        <p style="font-size: 15px;"><code>3, 1, 2, 5, 4, 6, 9, 7, 10, 8</code></p>
+
+        <p>Lúc này, chúng ta hãy xem pivot (số 6): sau loạt hành quân đầu tiên thì all những phần tử nằm bên trái pivot <b>đều nhỏ hơn</b> nó, và all những phần tử nằm bên phải <b>đều lớn hơn</b> nó.
+        <br>Như vậy, ta đã đưa 6 về đúng vị trí của nó.</p>
+
+        <p>Tiếp theo, dãy được chia thành 2 dãy nhỏ hơn là dãy bên trái và bên phải số 6.
+        <br>Ta tiếp tục thực hiện hành quân như trên đối với 2 dãy này và sẽ thu được thêm các pivot khác ở đúng vị trí và xuất hiện thêm các dãy con độ dài ngắn hơn.
+            Thực hiện đến cuối ta thu được dãy có thứ tự như mong muốn.</p>
+    </ul>
+
+    <h2>2. Code</h2>
+    <pre>
+        const quickSort = (arr) => {
+            if(arr.length <= 1) {
+                return arr;
+            }
+
+            let pivot = arr[0];
+            let leftArr = [];
+            let rightArr = [];
+
+            for(let i = 1; i < arr.length; i++) {
+                if(arr[i] < pivot) {
+                    leftArr.push(arr[i]);
+                } else {
+                    rightArr.push(arr[i]);
+                }
+            }
+
+            return [...quickSort(leftArr), pivot, ...quickSort(rightArr)];
+        }
+        
+        const arr = [3, 1, 4, 2, 5];
+        console.log("Array: ", arr);
+        
+        const sortedArr = selectionSort(arr);
+        console.log("Array after sorted: ", sortedArr);
+</pre>
+    <h3>Output:</h3>
+    <p id="originalArray"></p>
+    <p id="sortedArray"></p>
+
+    <script>
+        const quickSort = (arr) => {
+            if(arr.length <= 1) {
+                return arr;
+            }
+
+            let pivot = arr[0];
+            let leftArr = [];
+            let rightArr = [];
+
+            for(let i = 1; i < arr.length; i++) {
+                if(arr[i] < pivot) {
+                    leftArr.push(arr[i]);
+                } else {
+                    rightArr.push(arr[i]);
+                }
+            }
+
+            return [...quickSort(leftArr), pivot, ...quickSort(rightArr)];
+        };
+
+        const arr = [3, 1, 4, 2, 5];
+        document.getElementById('originalArray').textContent = "Original Array: " + arr;
+
+        const sortedArr = quickSort(arr);
+        document.getElementById('sortedArray').textContent = "Sorted Array: " + sortedArr;
+    </script>
+
+    <h2>3. Kết Luận</h2>
+    <ul>
+        <li><b>QuickSort</b> là thuật toán sẵp xếp theo nguyên tắc "<i>chia để trị</i>", phân mảng tập dữ liệu xung quanh 1 pivot.</li>
+        <li>Độ phức tạp: trung bình O(nlogn), nhưng có thể đạt O(n) trong trường hợp xấu.</li>
+        <li>Được đánh giá cao về hiệu suất và tính thực tiễn trong nhiều ứng dụng thực tế.</li>
+        <li>
+            <p><b>Nhược điểm:</b></p>
+            <ul>
+                <li>Phụ thuộc vào cách chọn pivot.</li>
+                <li>Không ổn định.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Merge_sort">https://en.wikipedia.org/wiki/Merge_sort</a></li>
+        <li><a href="https://www.geeksforgeeks.org/merge-sort/">https://www.geeksforgeeks.org/merge-sort/</a></li>
+    </ul>
+
+    <button onclick="history.back()">Back</button>
+
+</body>
+
+</html>
