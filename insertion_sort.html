@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Insertion Sort</title>
+    <style>
+        pre {
+            background-color: #282c34;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        body {
+            font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+            background-color: #fbeeee;
+            color: black;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Insertion Sort</h1>
+    <h2>1. Introduction</h2>
+    <h3>1.1. How does Insertion Sort work?</h3>
+    <ul>
+        <p><b>Insertion Sort</b> is a way to sort a list by gradually building up a sorted part. It is like sorting playing cards in your hands.
+            You split the cards into two groups: the sorted cards and the unsorted cards. Then, pick a card from the unsorted group and put it in the right place in the sorted group.</p>
+            
+            <p>Here is actually how the Insertion Sort works:</p>
+            <ul>
+                <li>Begin with a list. Initially, the first number by itself is considered "sorted".</li>
+                <li>Then, for each new number that follows, the sorted portion is examined to determine the correct place for it.</li>
+                <li>The new number is compared with the numbers already in the sorted portion, and the numbers are shifted as necessary until the new number fits in perfectly.</li>
+                <li>This procedure continues until every number in the list is in its proper place.</li>
+            </ul>
+        </p>
+    </ul>
+
+    <h3>1.2. Illustration of Insertion Sort</h3>
+    <ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Insertion_sort.gif" alt="Insertion Sort Animation" style="width: 250px; height: auto; border: 2px solid black; margin-left: 195px;">
+            <p style="font-style: italic; margin-left: 240px; font-size: 75%;">Insertion sort animation</p>
+        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240802210251/Insertion-sorting.png" alt="Illustration of Insertion Sort" style="width: 650px; height: auto; border: 2px solid black;">
+        <p style="font-style: italic; margin-left: 218px; font-size: 75%;">Illustration of Insertion Sort</p>
+    </ul>
+
+    <h2>2. Code</h2>
+    <pre style="color: #f4f4f4;">
+        const insertionSort = (arr) => {
+            let sortedArr = [...arr]; <span style="color: #90b061">// A copy of the array</span>
+
+            for(let i = 1; i < sortedArr.length; i++) {
+                let key = arr[i];
+                let j = i - 1;
+
+                <span style="color: #90b061">/* Move elements of arr[0..i-1], that are greater than key, 
+                to one position ahead of their current position */</span>
+                while (j >= 0 && sortedArr[j] > key) {
+                    sortedArr[j + 1] = sortedArr[j];
+                    j -= 1;
+                }
+                sortedArr[j + 1] = key;
+            }
+            return sortedArr;
+        };
+
+        const arr = [23, 1, 10, 5, 2];
+        document.getElementById('originalArray').textContent = "Original Array: " + arr;
+
+        const sortedArr = insertionSort(arr);
+        document.getElementById('sortedArray').textContent = "Sorted Array: " + sortedArr;</pre>
+    <h3>Output:</h3>
+    <p id="originalArray"></p>
+    <p id="sortedArray"></p>
+
+    <script>
+        const insertionSort = (arr) => {
+            let sortedArr = [...arr];
+
+            for(let i = 1; i < sortedArr.length; i++) {
+                let key = arr[i];
+                let j = i - 1;
+                
+                while(j >= 0 && sortedArr[j] > key) {
+                    sortedArr[j + 1] = sortedArr[j];
+                    j -= 1;
+                }
+                sortedArr[j + 1] = key;
+            }
+            return sortedArr;
+        };
+
+        const arr = [23, 1, 10, 5, 2];
+        document.getElementById('originalArray').textContent = "Original Array: " + arr;
+
+        const sortedArr = insertionSort(arr);
+        document.getElementById('sortedArray').textContent = "Sorted Array: " + sortedArr;
+    </script>
+
+    <h3>Explanation</h3>
+    <pre style = "color: #f4f4f4"><p>The initial array: 
+        [<b>23, 1, 10, 5, 2</b>].<br>The first element (23) is considered sorted by itself.
+        23 > 1? → [<b>1, 23, 10, 5, 2</b>]
+        23 > 10? → [<b>1, 10, 23, 5, 2</b>]
+        23 > 5? → [<b>1, 10, 5, 23, 2</b>], 10 > 5? → [<b>1, 5, 10, 23, 2</b>],
+                                     5 > 1? → [<b>1, 5, 10, 23, 2</b>]
+        23 > 2? → [<b>1, 5, 10, 2, 23</b>], 10 > 2? → [<b>1, 5, 2, 10, 23</b>],
+                                     5 > 2? → [<b>1, 2, 5, 10, 23</b>],
+                                     2 > 1? → [<b>1, 2, 5, 10, 23</b>]</p></pre>
+
+    <h2>4. Conclusion</h2>
+    <ul>
+        <p><b>Simplicity:</b> Easy to implement & understand.</p>
+        <p><b>Efficiency on Small Data:</b> Stable and works quickly on small or nearly sorted arrays, though its worst-case time complexity is O(n<sup>2</sup>).</p>
+        <p><b>Practically:</b> Often used in hubrid sorts for its simplicity and low space complexity (O(1) extra space).</p>
+        <p><b>Insertion sort & Bubble sort:</b> Insertion sort inserts each element into its correct position with fewer moves, while Bubble sort repeatedly swaps adjacent elements, making insertion sort typically more
+        efficient on small or nearly sorted data.</p>
+    </ul>
+    
+
+    <h2>References</h2>
+    <ul>
+        <li><a href="https://en.wikipedia.org/wiki/insertion_sort">https://en.wikipedia.org/wiki/insertion_sort</a></li>
+        <li><a href="https://www.geeksforgeeks.org/insertion-sort-algorithm/">https://www.geeksforgeeks.org/insertion-sort-algorithm/</a></li>
+    </ul>
+
+    <button onclick="history.back()">Back</button>
+
+</body>
+
+</html>
